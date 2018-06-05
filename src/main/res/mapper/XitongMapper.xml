@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biao.dao.XitongMapper">
+
+    <!--<cache type="org.mybatis.caches.redis.RedisCache"/>-->
+
+    <insert id="insertsystemlogmessage" parameterType="com.biao.pojo.Systemlogmessage">
+        insert into systemlogmessage values
+         (null,#{systemLogMessage_Name},#{systemLogMessage_Roles},#{systemLogMessag_Method},#{systemLogMessage_Description},
+         #{systemLogMessage_Params},#{systemLogMessage_StartTime},#{systemLogMessage_Time},#{systemLogMessage_Successful},#{systemLogMessage_Exception})
+    </insert>
+
+    <select id="selectpermissiontb" resultType="java.lang.String">
+        select permissionValue from permissiontb
+    </select>
+
+    <insert id="insertpermissiontb" parameterType="com.biao.pojo.Permissiontb">
+        insert into permissiontb values (null,#{permissionValue},#{permissionModule},#{permissionName},now())
+    </insert>
+
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biao.dao.Com01InfoMapper">
+
+    <!--<cache type="org.mybatis.caches.redis.RedisCache"/>-->
+
+    <select id="selectUsertb" resultType="com.biao.pojo.Usertb">
+        select * from usertb where userName=#{name} and userPassWord=md5(#{prw})
+    </select>
+
+    <select id="selectPermission" resultType="java.lang.String">
+            select permissionValue from permissiontb where permissionId in
+                    (select permissionId from rolepermissiontb where roleId in(select roleId from userroletb  where userId=#{id}))
+    </select>
+
+    <select id="selectroleId" resultType="java.lang.Integer">
+        select roleId from userroletb where userId=#{id}
+    </select>
+
+    <select id="selectmoduleId" parameterType="list" resultType="java.lang.Integer">
+        select moduleId from rolemoduletb where roleId in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectmoduletbfathers" resultType="com.biao.pojo.Moduletb">
+        select * from moduletb where parentId= #{one} and moduleId in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectmoduletbCherchs" resultType="com.biao.pojo.Moduletb">
+        select * from moduletb where parentId=#{id}
+    </select>
+
+
+
+
+</mapper>
